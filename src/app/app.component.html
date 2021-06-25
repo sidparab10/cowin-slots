@@ -1,19 +1,54 @@
 <div class="session-table">
-    <div>vaccince slot Dose 2 Age 45+ and Covieshield</div>
+  <div>Vaccine Slots Covieshield</div>
+  <div class="input-contianer">
+    <div class="dose-container">
+      Dose
+      <select name="dose" #dose>
+        <option value="1">Dose 1</option>
+        <option value="2" selected>Dose 2</option>
+      </select>
+    </div>
+    <div class="date-container">
+      <label>Date </label>
+      <input type="date" name="dmy" #dmy>
+    </div>
+    <div class="age-group-container">
+      Age Group
+      <select name="dose" #age>
+        <option value="18">18+</option>
+        <option value="45" selected>45+</option>
+      </select>
+    </div>
+    <button class="update-btn" (click)="reloadTable(dose.value, age.value, dmy.valueAsDate)">Update</button>
+  </div>
+  <div class="table-container">
     <table border="1">
-        <tr>
-            <th>Name</th>
-            <th>Address</th>
-            <th>Pincode</th>
-            <th>Type</th>
-            <th>Count</th>
-        </tr>
-        <tr *ngFor="let data of dataList">
-            <td>{{data.name}}</td>
-            <td>{{data.address}}</td>
-            <td>{{data.pincode}}</td>
-            <td>{{data.type}}</td>
-            <td>{{data.count}}</td>
-        </tr>
+      <tr>
+        <th>Date</th>
+        <td>{{selectedDate}}</td>
+      </tr>
+      <tr>
+        <th>Age</th>
+        <td>{{selectedAge}}+</td>
+      </tr>
+      <tr>
+        <th>Dose</th>
+        <td>Dose {{selectedDose}}</td>
+      </tr>
+      <tr>
+        <th>Name</th>
+        <th>Address</th>
+        <th>Pincode</th>
+        <th>Type</th>
+        <th>Count</th>
+      </tr>
+      <tr *ngFor="let data of dataList">
+        <td>{{data.name}}</td>
+        <td>{{data.address}}</td>
+        <td>{{data.pincode}}</td>
+        <td>{{data.type}}</td>
+        <td>{{data.count}}</td>
+      </tr>
     </table>
+  </div>
 </div>
