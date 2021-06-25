@@ -35,11 +35,10 @@ export class AppComponent implements OnInit {
       name: "Pune"
     }
   ]
-  
+  selectedDate = '28-06-2021';
 
   intTimer: any = 0;
-
-  selectedDate = '28-06-2021';
+  refreshTime = 10;
 
   constructor(
     private http: HttpClient
@@ -56,7 +55,7 @@ export class AppComponent implements OnInit {
     this.intTimer = setInterval(() => {
       this.dataList = [];
       this.getData();
-    }, 10000);
+    }, this.refreshTime * 1000);
   }
 
   getData() {
@@ -87,10 +86,11 @@ export class AppComponent implements OnInit {
   }
 
 
-  reloadTable(dose, age, dmy, district) {
+  reloadTable(dose, age, dmy, district, time) {
     this.selectedAge = Number(age);
     this.selectedDose = Number(dose);
     this.selectedDist = Number(district);
+    this.refreshTime = !!time ? time : this.refreshTime;
     if (!!dmy) {
       const date = new Date(dmy);
       const dd = date.getDate();
