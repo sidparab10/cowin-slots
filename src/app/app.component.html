@@ -1,6 +1,14 @@
 <div class="session-table">
   <div>Vaccine Slots Covieshield</div>
   <div class="input-contianer">
+    <div class="district-selction">
+      District
+      <select name="district" #district>
+        <option *ngFor="let dist of districtList; let idx = index;" [value]="idx" [selected]="dist.selected === true">
+          {{dist.name}}
+        </option>
+      </select>
+    </div>
     <div class="dose-container">
       Dose
       <select name="dose" #dose>
@@ -19,7 +27,8 @@
         <option value="45" selected>45+</option>
       </select>
     </div>
-    <button class="update-btn" (click)="reloadTable(dose.value, age.value, dmy.valueAsDate)">Update</button>
+    <button class="update-btn"
+      (click)="reloadTable(dose.value, age.value, dmy.valueAsDate, district.value)">Update</button>
   </div>
   <div class="table-container">
     <table border="1">
@@ -34,6 +43,10 @@
       <tr>
         <th>Dose</th>
         <td>Dose {{selectedDose}}</td>
+      </tr>
+      <tr>
+        <th>District</th>
+        <td>{{districtList[selectedDist].name}}</td>
       </tr>
       <tr>
         <th>Name</th>

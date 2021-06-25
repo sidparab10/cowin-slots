@@ -11,6 +11,31 @@ export class AppComponent implements OnInit {
 
   selectedDose = 2;
   selectedAge = 45;
+  selectedDist = 0;
+  districtList = [
+    {
+      id: 395,
+      name: "Mumbai",
+      selected: true
+    },
+    {
+      id: 392,
+      name: "Thane"
+    },
+    {
+      id: 374,
+      name: "Sindhudurg"
+    },
+    {
+      id: 394,
+      name: "Palghar"
+    },
+    {
+      id: 363,
+      name: "Pune"
+    }
+  ]
+  
 
   intTimer: any = 0;
 
@@ -35,7 +60,8 @@ export class AppComponent implements OnInit {
   }
 
   getData() {
-    this.http.get('https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/calendarByDistrict?district_id=395&date=' + this.selectedDate)
+    const distId = this.districtList[this.selectedDist].id;
+    this.http.get('https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/calendarByDistrict?district_id=' + distId + '&date=' + this.selectedDate)
       .subscribe((data) => {
         this.filterData(data)
         console.log(this.dataList);
@@ -61,15 +87,18 @@ export class AppComponent implements OnInit {
   }
 
 
-  reloadTable(dose, age, dmy) {
-    const date = new Date(dmy);
+  reloadTable(dose, age, dmy, district) {
     this.selectedAge = Number(age);
     this.selectedDose = Number(dose);
-    const dd = date.getDate();
-    let mm = date.getMonth() + 1;
-    mm = mm < 10 ? Number(`0${mm}`) : mm;
-    const yyyy = date.getFullYear();
-    this.selectedDate = `${dd}-${mm}-${yyyy}`;
+    this.selectedDist = Number(district);
+    if (!!dmy) {
+      const date = new Date(dmy);
+      const dd = date.getDate();
+      let mm = date.getMonth() + 1;
+      mm = mm < 10 ? Number(`0${mm}`) : mm;
+      const yyyy = date.getFullYear();
+      this.selectedDate = `${dd}-${mm}-${yyyy}`;
+    }
     clearInterval(this.intTimer);
     this.getSlotData();
   }
